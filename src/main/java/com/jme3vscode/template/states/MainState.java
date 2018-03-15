@@ -29,7 +29,7 @@ public class MainState extends BulletAppState implements PhysicsTickListener, An
   public void initialize(AppStateManager stateManager, Application app) {
     super.initialize(stateManager, app);
     this.setThreadingType(BulletAppState.ThreadingType.SEQUENTIAL);
-    this.getPhysicsSpace().setGravity(new Vector3f(0, 0, -10));
+    this.getPhysicsSpace().setGravity(new Vector3f(0, -10, 0));
 
     simpleApplication = (SimpleApplication) app;
 
@@ -44,9 +44,10 @@ public class MainState extends BulletAppState implements PhysicsTickListener, An
     scenegraph = new MainScenegraph(simpleApplication.getRootNode(), simpleApplication.getAssetManager(),
         this.getPhysicsSpace());
     scenegraph.initialize();
-    simpleApplication.getCamera().setLocation(new Vector3f(0, 0, 20));
-    // simpleApplication.getCamera().lookAt(scenegraph.boxGeometry.getLocalTranslation(), 
-    // new Vector3f(0, 20, 0));
+//    simpleApplication.getCamera().setLocation(new Vector3f(0, 0, 20));
+    simpleApplication.getCamera().setLocation(new Vector3f(10, 20, 0));
+    simpleApplication.getCamera().lookAt(scenegraph.boxGeometry.getLocalTranslation(), 
+     new Vector3f(10, 20, 0));
 
     this.setDebugEnabled(true);
     isPaused = false;

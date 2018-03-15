@@ -10,6 +10,8 @@ public class Main extends SimpleApplication {
         Main app = new Main();
         AppSettings settings = new AppSettings(true);
         settings.setTitle("JME3VSCode");
+        settings.setHeight(768);
+        settings.setWidth(1024);
         app.setSettings(settings);
         app.showSettings = false;
         app.setDisplayStatView(false);
