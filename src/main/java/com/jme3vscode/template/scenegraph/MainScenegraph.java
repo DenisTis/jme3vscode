@@ -82,4 +82,10 @@ public class MainScenegraph {
     physicsSpace.add(characterControl);
 
   }
+
+  public void cleanup() {
+    //check as later it can clean menu children by default
+    //probably attach all children under Main or Standard Node
+    rootNode.detachAllChildren();
+  }
 }

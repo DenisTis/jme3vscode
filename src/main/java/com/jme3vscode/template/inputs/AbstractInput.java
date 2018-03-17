@@ -9,7 +9,7 @@ public class AbstractInput {
   protected AnalogListener analogListener;
   protected ActionListener actionListener;
 
-  public void initialize(InputManager inputManager, AnalogListener analogListener, ActionListener actionListener) {
+  public AbstractInput(InputManager inputManager, AnalogListener analogListener, ActionListener actionListener) {
     this.inputManager = inputManager;
     this.analogListener = analogListener;
     this.actionListener = actionListener;
