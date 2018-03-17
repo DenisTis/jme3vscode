@@ -29,7 +29,6 @@ public class MainState extends BulletAppState implements PhysicsTickListener {
   public void initialize(AppStateManager stateManager, Application app) {
     super.initialize(stateManager, app);
     this.setThreadingType(BulletAppState.ThreadingType.SEQUENTIAL);
-    this.getPhysicsSpace().setGravity(new Vector3f(0, -10, 0));
 
     simpleApplication = (SimpleApplication) app;
 
@@ -47,7 +46,7 @@ public class MainState extends BulletAppState implements PhysicsTickListener {
     simpleApplication.getCamera().lookAt(scenegraph.boxGeometry.getLocalTranslation(), new Vector3f(10, 20, 0));
 
     //TODO test if works fine if scenegraph is updated later
-    inputProcessor = new StandardInputProcessor(scenegraph);
+    inputProcessor = new StandardInputProcessor(app.getInputManager(), app.getCamera(), scenegraph);
     input = new StandardInput(app.getInputManager(), inputProcessor, inputProcessor);
   }
 

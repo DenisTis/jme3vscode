@@ -4,7 +4,6 @@ import com.jme3.scene.Node;
 import com.jme3.material.Material;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Cylinder;
 import com.jme3.scene.shape.Quad;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
@@ -24,6 +23,7 @@ public class MainScenegraph {
   public RigidBodyControl pBox;
   public Geometry characterGeometry;
   public BetterCharacterControl characterControl;
+
   public MainScenegraph(Node rootNode, AssetManager assetManager, PhysicsSpace physicsSpace) {
     this.rootNode = rootNode;
     this.assetManager = assetManager;
@@ -31,6 +31,7 @@ public class MainScenegraph {
   }
 
   public void initialize() {
+    physicsSpace.setGravity(new Vector3f(0, -10, 0));
     // Create object
     Box box = new Box(1, 1, 1);
     boxGeometry = new Geometry("Box", box);
@@ -64,7 +65,6 @@ public class MainScenegraph {
     physicsSpace.add(pFloor);
 
     //Create character control
-    // Cylinder capsule = new Cylinder(16, 16, 1, 1);
     Node characterNode = new Node("characterNode");
     characterGeometry = new Geometry("characterGeometry", new Box(0.5f, 1, 0.5f));
     characterGeometry.setMaterial(mat);
