@@ -16,16 +16,14 @@ import com.jme3.asset.AssetManager;
 import com.jme3.math.FastMath;
 
 public class MainScenegraph {
-  public Node rootNode;
-  public AssetManager assetManager;
-  public PhysicsSpace physicsSpace;
+  private Node rootNode;
+  private AssetManager assetManager;
+  private PhysicsSpace physicsSpace;
   public Geometry boxGeometry;
   public RigidBodyControl pBox;
   public Geometry characterGeometry;
   public BetterCharacterControl characterControl;
-  public Node characterNode;
   public Geometry floorGeometry;
-  private Plane floorInfinite;
 
   public MainScenegraph(Node rootNode, AssetManager assetManager, PhysicsSpace physicsSpace) {
     this.rootNode = rootNode;
@@ -62,14 +60,14 @@ public class MainScenegraph {
     rootNode.attachChild(floorGeometry);
 
     //because of Quad rotation, another Plane vector has to be used
-    floorInfinite = new Plane(new Vector3f(0, 0, 1), 0);
+    Plane floorInfinite = new Plane(new Vector3f(0, 0, 1), 0);
     PlaneCollisionShape planeCollision = new PlaneCollisionShape(floorInfinite);
     RigidBodyControl pFloor = new RigidBodyControl(planeCollision, 0);
     floorGeometry.addControl(pFloor);
     physicsSpace.add(pFloor);
 
     //Create character control
-    characterNode = new Node("characterNode");
+    Node characterNode = new Node("characterNode");
     characterGeometry = new Geometry("characterGeometry", new Box(0.5f, 1, 0.5f));
     characterGeometry.setMaterial(mat);
     //add offset to the geometry of the node (otherwise physics shape is half of the model height higher)

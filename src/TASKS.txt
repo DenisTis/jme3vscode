@@ -1,0 +1,10 @@
+- Implement main state HUD with indicators
+    Implement inventory state
+- Implement camera state
+    - Implement character follow (chase Camera?)
+    - Implement camera rotations (around screen center?)
+    - Implement zoom level (different for each resolution or screen side?)
+- Implement menu
+- Implement controls
+    - Implement collisions
+    - Implement pathfinding
