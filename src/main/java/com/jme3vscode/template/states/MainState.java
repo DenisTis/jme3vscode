@@ -58,5 +58,12 @@ public class MainState extends BulletAppState implements PhysicsTickListener {
 
   @Override
   public void prePhysicsTick(PhysicsSpace space, float tpf) {
+    
   }
+
+  @Override
+  public void physicsTick(PhysicsSpace space, float tpf) {
+    scenegraph.characterControl.setWalkDirection(new Vector3f(0, 0, 0));
+  }
+
 }

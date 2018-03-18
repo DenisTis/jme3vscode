@@ -24,14 +24,20 @@ public class StandardInput extends AbstractInput {
     inputManager.addMapping(StandardInputActions.ACTION_MOUSE_MOVE_DOWN, new MouseAxisTrigger(MouseInput.AXIS_Y, true));
 
     //Assign one-time actions
-    inputManager.addListener(actionListener, StandardInputActions.ACTION_PAUSE, StandardInputActions.ACTION_USE,
-    StandardInputActions.ACTION_FORW, StandardInputActions.ACTION_BACK,
-    StandardInputActions.ACTION_LEFT, StandardInputActions.ACTION_RIGHT);
+    inputManager.addListener(actionListener, 
+    StandardInputActions.ACTION_PAUSE, 
+    StandardInputActions.ACTION_USE);
 
     //Assign actions with duration
-      inputManager.addListener(analogListener, StandardInputActions.ACTION_MOUSE_MOVE_DOWN, 
-      StandardInputActions.ACTION_MOUSE_MOVE_UP, StandardInputActions.ACTION_MOUSE_MOVE_LEFT, 
-      StandardInputActions.ACTION_MOUSE_MOVE_RIGHT);
+      inputManager.addListener(analogListener, 
+      StandardInputActions.ACTION_MOUSE_MOVE_DOWN, 
+      StandardInputActions.ACTION_MOUSE_MOVE_UP, 
+      StandardInputActions.ACTION_MOUSE_MOVE_LEFT, 
+      StandardInputActions.ACTION_MOUSE_MOVE_RIGHT,
+      StandardInputActions.ACTION_FORW, 
+      StandardInputActions.ACTION_BACK,
+      StandardInputActions.ACTION_LEFT, 
+      StandardInputActions.ACTION_RIGHT);
   }
 
 }

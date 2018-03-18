@@ -23,6 +23,9 @@ public class MainScenegraph {
   public RigidBodyControl pBox;
   public Geometry characterGeometry;
   public BetterCharacterControl characterControl;
+  public Node characterNode;
+  public Geometry floorGeometry;
+  private Plane floorInfinite;
 
   public MainScenegraph(Node rootNode, AssetManager assetManager, PhysicsSpace physicsSpace) {
     this.rootNode = rootNode;
@@ -48,7 +51,7 @@ public class MainScenegraph {
 
     //Create floor
     Quad floorQuad = new Quad(20, 20);
-    Geometry floorGeometry = new Geometry("Floor", floorQuad);
+    floorGeometry = new Geometry("Floor", floorQuad);
     // otherwise the corner of quad starts in the center of screen
     Material blackMaterial = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
     blackMaterial.setColor("Color", ColorRGBA.DarkGray);
@@ -59,13 +62,14 @@ public class MainScenegraph {
     rootNode.attachChild(floorGeometry);
 
     //because of Quad rotation, another Plane vector has to be used
-    PlaneCollisionShape planeCollision = new PlaneCollisionShape(  new Plane(new Vector3f(0, 0, 1), 0));
+    floorInfinite = new Plane(new Vector3f(0, 0, 1), 0);
+    PlaneCollisionShape planeCollision = new PlaneCollisionShape(floorInfinite);
     RigidBodyControl pFloor = new RigidBodyControl(planeCollision, 0);
     floorGeometry.addControl(pFloor);
     physicsSpace.add(pFloor);
 
     //Create character control
-    Node characterNode = new Node("characterNode");
+    characterNode = new Node("characterNode");
     characterGeometry = new Geometry("characterGeometry", new Box(0.5f, 1, 0.5f));
     characterGeometry.setMaterial(mat);
     //add offset to the geometry of the node (otherwise physics shape is half of the model height higher)
