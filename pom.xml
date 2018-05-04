@@ -9,17 +9,18 @@
   <name>app</name>
   <url>http://maven.apache.org</url>
   <properties>
-    <jme3_g>com.jme3</jme3_g>
-    <jme3_v>3.0.10</jme3_v>
+    <jme3_g>org.jmonkeyengine</jme3_g>
+    <jme3_v>3.2.0-stable</jme3_v>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.9</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-
   <repositories>
     <repository>
-      <id>com_jme3-repo</id>
-      <url>http://dl.bintray.com/jmonkeyengine/com.jme3</url>
+      <id>jcenter</id>
+      <url>http://jcenter.bintray.com</url>
     </repository>
   </repositories>
-
   <dependencies>
     <dependency>
       <groupId>${jme3_g}</groupId>
@@ -38,5 +39,154 @@
       <version>${jme3_v}</version>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-bullet</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-bullet-native</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-blender</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!--Terrain is needed to build complex physics shapes from mesh for Bullet-->
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-terrain</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!--Effects is needed for the post processing shadow filter for ambient occlusion-->
+    <dependency>
+      <groupId>${jme3_g}</groupId>
+      <artifactId>jme3-effects</artifactId>
+      <version>${jme3_v}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <!-- Recast4j - 4 dependencies -->
+    <dependency>
+      <groupId>org.recast4j</groupId>
+      <artifactId>recast</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.recast4j</groupId>
+      <artifactId>detour</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.recast4j</groupId>
+      <artifactId>detour-crowd</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.recast4j</groupId>
+      <artifactId>detour-tile-cache</artifactId>
+      <version>1.0.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.recast4j</groupId>
+      <artifactId>detour-extras</artifactId>
+      <version>1.0.7</version>
+    </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>
+                    ${project.build.directory}/lib
+                </outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <!-- Build an executable JAR -->
+        <!--For that, all libraries should either be indicated, or maven-dependency-plugin should put
+        them in a special folder-->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.0.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+              <mainClass>com.jme3vscode.template.application.Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.2</version>
+        <configuration>
+          <fork>true</fork>
+          <executable>C:\Program Files\Java\jdk-9.0.4\bin\javac.exe</executable>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+        <artifactId>launch4j-maven-plugin</artifactId>
+        <version>1.5.2</version>
+        <executions>
+          <execution>
+            <id>l4j-gui</id>
+            <phase>package</phase>
+            <goals>
+              <goal>launch4j</goal>
+            </goals>
+            <configuration>
+              <headerType>gui</headerType>
+              <outfile>target/Project.exe</outfile>
+              <jar>target/${project.artifactId}-${project.version}.jar</jar>
+              <!-- if <dontWrapJar>true</dontWrapJar> change to this conf <jar>${project.artifactId}-${project.version}.jar</jar> -->
+              <dontWrapJar>false</dontWrapJar>
+              <errTitle>Error in launch4j plugin</errTitle>
+              <classPath>
+                <mainClass>com.jme3vscode.template.application.Main</mainClass>
+              </classPath>
+              <icon>project.ico</icon>
+              <jre>
+                <minVersion>1.8.0</minVersion>
+                <maxVersion>1.9.0</maxVersion>
+                <initialHeapSize>512</initialHeapSize>
+                <maxHeapSize>1024</maxHeapSize>
+              </jre>
+              <versionInfo>
+                <fileVersion>1.0.0.0</fileVersion>
+                <txtFileVersion>1.0.0.0</txtFileVersion>
+                <fileDescription>des</fileDescription>
+                <copyright>Copyright (c) 2014 </copyright>
+                <companyName>comp</companyName>
+                <productVersion>3.0.0.0</productVersion>
+                <txtProductVersion>${project.version}</txtProductVersion>
+                <productName>Project</productName>
+                <internalName>Project</internalName>
+                <originalFilename>Project.exe</originalFilename>
+              </versionInfo>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
